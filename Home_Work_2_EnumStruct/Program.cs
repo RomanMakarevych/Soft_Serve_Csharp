@@ -1,4 +1,4 @@
-﻿//using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 // Task 1 
 
 // змiнна для рахунку к-тi iтереацiй циклу
