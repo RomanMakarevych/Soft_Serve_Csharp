@@ -45,3 +45,5 @@ Console.WriteLine($" {4444L} , type: {4444L.GetType()}");
 
 float koef = 4.5F;
 decimal salary = 13005.00M;
+
+int @rom = 20;
