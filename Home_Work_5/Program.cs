@@ -5,6 +5,8 @@
     {
         static void Main(string[] args)
         {
+            // Task 1
+
             // Creat the List of IDeveloper:
 
 
@@ -27,9 +29,19 @@
                 Console.WriteLine(item);
             }
 
+            // Sort list of IDeveloper: 
+
+            Console.WriteLine(new String('-', 50));
+            developers.Sort();
+
+            foreach (var item in developers)
+            {
+                Console.WriteLine(item);
+            }
+
             // Call Creat() and Destroy() methods for all of it:
 
-             
+
             Console.WriteLine(new String('-', 50));
             Console.ForegroundColor = ConsoleColor.Blue;
            
@@ -63,8 +75,8 @@
                 Console.WriteLine(developer.GetType().Name + " using " + developer.Tool);
             }
 
-            
-            
+
+
             // Sort list of Programmer:
 
 
@@ -86,7 +98,30 @@
                 Console.WriteLine(p.GetType().Name + " using " + p.Tool);
             }
 
-          
+            //////////////////////////////////////////////////////////////////
+            //Task 2
+
+            Dictionary<uint, string> dic = new Dictionary<uint, string>();
+            dic.Add(12345, "Roman");
+            dic.Add(23451, "Oleg");
+            dic.Add(12456, "Igor");
+            dic.Add(77755, "Roman");
+            dic.Add(66655, "Petro");
+            dic.Add(44455, "Ivan");
+            dic.Add(11111, "Pulup");
+
+            Console.WriteLine("Enter the ID to find in dictionary Name: ");
+            uint ID = uint.Parse(Console.ReadLine());
+
+            if (dic.ContainsKey(ID))
+            {
+                string name = dic[ID];
+                Console.WriteLine($"The name associated with ID {ID} is {name}.");
+            }
+            else
+            {
+                Console.WriteLine($"No name found for ID {ID}.");
+            }
         }
     }
 
@@ -98,7 +133,7 @@
         }
     }
 
-    class Builder : IDeveloper, IComparable<Builder>
+    class Builder : IDeveloper , IComparable<Builder>
     {
         private string? buildingType;
         public string Tool { get; set; }
@@ -118,7 +153,7 @@
 
         public int CompareTo(Builder? other)
         {
-        
+
             if (other == null)
             {
                 return 1;
@@ -152,10 +187,14 @@
             return $"Tool: {Tool}, Building Type: {buildingType} ";
         }
 
+        public int CompareTo(IDeveloper? other)
+        {
+            return this.Tool.CompareTo(other.Tool);
+        }
     }
 
 
-    class Programmer : IDeveloper,IComparable<Programmer>   
+    class Programmer : IDeveloper ,IComparable<Programmer>   
     {
         private string? language;
         public string Tool { get; set; }
@@ -194,9 +233,16 @@
             if (other == null) return 1;
             return this.Language.CompareTo(other.Language);
         }
+
+        public int CompareTo(IDeveloper? other)
+        {
+            if (other == null) return 1;
+
+            return this.Tool.CompareTo(other.Tool);
+        }
     }
 
-    interface IDeveloper
+    interface IDeveloper:IComparable<IDeveloper>
     {
         string Tool { get; set; }
         void Create();
