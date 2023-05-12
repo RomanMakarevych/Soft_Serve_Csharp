@@ -1,67 +1,43 @@
-﻿namespace Task_5_1
+﻿
+
+using System;
+
+class Program
 {
-    internal class Program
+    static int ReadNumber(int start, int end)
     {
-
-        interface IFlyable
+        Console.Write($"Enter a number between {start} and {end}: ");
+        int number;
+        bool isNumber = int.TryParse(Console.ReadLine(), out number);
+        if (!isNumber || number < start || number > end)
         {
-            public void Fly();
+            throw new ArgumentException($"The number should be between {start} and {end}.");
         }
-
-        class Bird : IFlyable
-        {
-            private string? name;
-            private bool canFly;
-
-            public string Name
-            {
-                get { return name; }
-                set { this.name = value; }
-            }
-            public bool CanFly
-            {
-                get { return canFly; }
-                set { this.canFly = false; }
-            }
-
-            public void Fly()
-            {
-                Console.WriteLine($"Bird with {name}  fly: {canFly}"); ;
-            }
-        }
-
-        class Plane : IFlyable
-        {
-
-            public string? Mark { get; set; }
-            public float HighFly { get; set; }
-
-            public void Fly()
-            {
-                Console.WriteLine($"The Plane {Mark} , fly up to the  {HighFly} km ... ");
-            }
-        }
-
-
-        static void Main(string[] args)
-        {
-            List<IFlyable> flyables = new List<IFlyable>
-            {
-                new Bird { Name = "Parrot", CanFly = true },
-                new Bird { Name = "Chicken", CanFly = true },
-                new Bird { Name = "Straus", CanFly = false },
-                new Plane { Mark = "AN-56", HighFly = 10000 },
-                new Plane { Mark = "AN-53", HighFly = 9000 }
-
-
-            };
-
-            foreach (var item in flyables)
-            {
-                item.Fly();
-            }
-
-        }
+        return number;
     }
+
+    static void Main()
+    {
+        int[] numbers = new int[10];
+        int start = 1;
+        int end = 10;
+        for (int i = 0; i < 5; i++)
+        {
+            try
+            {
+                numbers[i] = ReadNumber(start, end);
+                if (i > 0 && numbers[i] <= numbers[i - 1])
+                {
+                    throw new ArgumentException("The number should be greater than the previous number entered.");
+                }
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+                i--; // Try again with the same index
+            }
+        }
+        Console.WriteLine("You have entered the following numbers:");
+        Console.WriteLine(string.Join(", ", numbers));
     }
-    
+}
