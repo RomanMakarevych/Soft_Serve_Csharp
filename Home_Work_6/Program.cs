@@ -6,19 +6,14 @@
         {
             return a / b;
         }
-
         static int ReadNumber(int start, int end)
         {
-
-
-
             Console.WriteLine("Enter the value: ");
             int number = int.Parse(Console.ReadLine());
 
-
             if (number < start || number > end)
             {
-                throw new ArgumentException($" The number should be between {start} and {end}.");
+                throw new ArgumentException($" The number should be between {start} and {end}.The number should be greater than the previous number entered.");
             }
 
             return number;
@@ -54,6 +49,10 @@
                 Console.WriteLine($"It's not correct format by value: {ex.Message}");
                 Console.ResetColor();
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
 
             // Task 3:
@@ -67,18 +66,13 @@
             //створюемо масив з 10 елементiв
             int[] numbers = new int[10];
 
-            for (int i = 0; i < numbers.Length; i++)
+            for (int i = 0; i < numbers.Length;)
             {
                 try
                 {
-                    numbers[i] = ReadNumber(start, end);
+                    numbers[i++] = ReadNumber(start, end);
+                    start = numbers[i-1];
 
-
-                    if (i > 0 && numbers[i] <= numbers[i - 1]) // перевiряемо чи поточне число бiльше за попередне
-                    {
-                        throw new ArgumentException("The number should be greater than the previous number entered.");
-
-                    }
                 }
                 catch (ArgumentException ex)
                 {
@@ -86,14 +80,18 @@
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"{ex.Message}");
                     Console.ResetColor();
-                    --i;
+                    
                 }
                 catch (FormatException ex)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"it's not  correct format by value: {ex.Message}");
                     Console.ResetColor();
-                    --i;
+                  
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
 
