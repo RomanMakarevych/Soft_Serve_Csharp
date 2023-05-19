@@ -47,7 +47,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "15_file_system", "15_file_s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Home_Work_7", "Home_Work_7\Home_Work_7.csproj", "{DDA5BECC-D142-434D-B3B7-21FD0DACADC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "16_inheritance", "16_inharitance\16_inheritance.csproj", "{427D4F62-3AE1-4818-A7A8-9AEB21B74EC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "16_inheritance", "16_inharitance\16_inheritance.csproj", "{427D4F62-3AE1-4818-A7A8-9AEB21B74EC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Home_Work_8", "Home_Work_8\Home_Work_8.csproj", "{9C3594A3-525E-4805-8B77-91BB491B38A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,10 @@ Global
 		{427D4F62-3AE1-4818-A7A8-9AEB21B74EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{427D4F62-3AE1-4818-A7A8-9AEB21B74EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{427D4F62-3AE1-4818-A7A8-9AEB21B74EC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C3594A3-525E-4805-8B77-91BB491B38A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C3594A3-525E-4805-8B77-91BB491B38A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C3594A3-525E-4805-8B77-91BB491B38A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C3594A3-525E-4805-8B77-91BB491B38A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

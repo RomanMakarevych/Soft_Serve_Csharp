@@ -53,6 +53,7 @@ namespace Home_Work_7
             // зчитуемо весь текст з фалу "phones.txt"
 
             Console.WriteLine("\n------------------ Text from file: <phones.txt> ------------------\n");
+
             using (StreamReader reader = File.OpenText(filePath))
             {
                 string all = reader.ReadToEnd();
@@ -66,8 +67,8 @@ namespace Home_Work_7
 
             using (StreamReader reader1 = File.OpenText(filePath))
             {
-                int count = 1;//створюемо змiнну,щоб лише 9 пар записати
-                string line;
+                int count = 1;//створюемо змiнну,щоб лише 9 пар записати у словник
+                string? line;
                 while ((line = reader1.ReadLine()) != null && count <= 9)
                 {
                     string[] parts = line.Split(':');
@@ -113,7 +114,7 @@ namespace Home_Work_7
 
             if (phoneBook.TryGetValue(searchName, out string searchNumber))
             {
-                Console.WriteLine("Знайдено номер телефону: " + searchNumber+"\n");
+                Console.WriteLine("Знайдено номер телефону: " + searchNumber + "\n");
             }
             else
             {
