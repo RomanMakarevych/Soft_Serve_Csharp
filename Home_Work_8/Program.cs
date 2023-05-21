@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Home_Work_8
 {
 
-    
-    abstract class Shape:IComparable<Shape>
+
+    abstract class Shape : IComparable<Shape>
     {
         private string? name;
         public string? Name { get; set; }
@@ -38,14 +39,14 @@ namespace Home_Work_8
 
         public override double Area()
         {
-            double area = Math.Round((Math.PI * Math.Pow(radius, 2)),2);
+            double area = Math.Round((Math.PI * Math.Pow(radius, 2)), 2);
 
             return area;
         }
 
         public override double Perimeter()
         {
-            double perimeter = Math.Round((2 * Math.PI * radius),2);
+            double perimeter = Math.Round((2 * Math.PI * radius), 2);
             return perimeter;
         }
 
@@ -53,15 +54,15 @@ namespace Home_Work_8
     class Square : Shape
     {
         private int side;
-        public int Side { get; set; }   
-        public Square(string name,int side) : base(name)
+        public int Side { get; set; }
+        public Square(string name, int side) : base(name)
         {
             this.side = side;
         }
 
         public override double Area()
         {
-            double area = Math.Pow(side,2); 
+            double area = Math.Pow(side, 2);
             return area;
         }
 
@@ -73,42 +74,44 @@ namespace Home_Work_8
     }
     internal class Program
     {
+
+        public static void WriteLine(string str, ConsoleColor color = ConsoleColor.White)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(str);
+            Console.ResetColor();
+        }
         static void AddShapes(List<Shape> shapes)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\n\t\tEnter data of 10 diffent shapes.\n");
+            WriteLine("\n\t\tEnter data of 10 diffent shapes.\n", ConsoleColor.Red);
 
             for (int i = 0; i < 3;)
             {
                 try
                 {
-                 
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Enter the name of shapes:");
-                Console.ForegroundColor = ConsoleColor.Green;
-                string? name = Console.ReadLine();
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Enter 1 for Circle or 2 for Square: ");
-                Console.ForegroundColor = ConsoleColor.Green;
-                int shapeType = int.Parse(Console.ReadLine());
-                
-                    if(shapeType == 1)
+
+                    WriteLine("Enter the name of shapes:", ConsoleColor.Cyan);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    string? name = Console.ReadLine();
+                    WriteLine("Enter 1 for Circle or 2 for Square: ", ConsoleColor.Cyan);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    int shapeType = int.Parse(Console.ReadLine());
+
+                    if (shapeType == 1)
                     {
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine("Enter the radius: ");
+                        WriteLine("Enter the radius: ", ConsoleColor.Cyan);
                         Console.ForegroundColor = ConsoleColor.Green;
                         int radius = int.Parse(Console.ReadLine());
-                        Circle circle = new(name,radius);
+                        Circle circle = new(name, radius);
                         shapes.Add(circle);
                         i++;
                     }
-                    else if(shapeType == 2)
+                    else if (shapeType == 2)
                     {
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine("Enter the side: ");
+                        WriteLine("Enter the side: ", ConsoleColor.Cyan);
                         Console.ForegroundColor = ConsoleColor.Green;
-                        int side =int.Parse(Console.ReadLine());    
-                        Square square = new(name,side);
+                        int side = int.Parse(Console.ReadLine());
+                        Square square = new(name, side);
                         shapes.Add(square);
                         i++;
                     }
@@ -121,15 +124,13 @@ namespace Home_Work_8
                 }
                 catch (FormatException)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid input format. Please enter a valid number.");
-                }       
+                    WriteLine("Invalid input format. Please enter a valid number.", ConsoleColor.Red);
+                }
                 catch (ArgumentException ex)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(ex.Message);
+                    WriteLine(ex.Message, ConsoleColor.Red);
                 }
-               
+
 
             }
             Console.ResetColor();
@@ -138,7 +139,7 @@ namespace Home_Work_8
         }
         static void ShowAllShapes(List<Shape> shapes)
         {
-            Console.WriteLine(new String('-',50));
+            Console.WriteLine(new String('-', 50));
             foreach (Shape shape in shapes)
             {
                 Console.WriteLine(shape);
@@ -162,7 +163,7 @@ namespace Home_Work_8
         static void Main(string[] args)
         {
             List<Shape> shapes = new List<Shape>();
-           
+
             //Task1
 
             AddShapes(shapes);
@@ -171,7 +172,7 @@ namespace Home_Work_8
             //Task2
 
             LargestPerimeter(shapes);
-          
+
             //Task3
 
             shapes.Sort();
