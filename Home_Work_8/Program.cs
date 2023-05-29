@@ -7,19 +7,19 @@ namespace Home_Work_8
 
     abstract class Shape : IComparable<Shape>
     {
-        private string? name;
-        public string? Name { get; set; }
+
+        public string Name { get; set; }
 
         public Shape(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
         public abstract double Area();
         public abstract double Perimeter();
 
         public override string ToString()
         {
-            return $"The Shape: {name} , Area: {Area()} cm^2, Perimeter: {Perimeter()} cm  ";
+            return $"The Shape: {Name} , Area: {Area()} cm^2, Perimeter: {Perimeter()} cm  ";
         }
 
         public int CompareTo(Shape? other)
@@ -39,15 +39,12 @@ namespace Home_Work_8
 
         public override double Area()
         {
-            double area = Math.Round((Math.PI * Math.Pow(radius, 2)), 2);
-
-            return area;
+            return Math.Round((Math.PI * Math.Pow(radius, 2)), 2);
         }
 
         public override double Perimeter()
         {
-            double perimeter = Math.Round((2 * Math.PI * radius), 2);
-            return perimeter;
+            return Math.Round((2 * Math.PI * radius), 2);
         }
 
     }
