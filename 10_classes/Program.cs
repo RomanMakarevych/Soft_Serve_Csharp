@@ -4,7 +4,7 @@ namespace _10_classes
 {
 
     enum Mode { Dry, Cool, Heat }
-    class Conditioner
+   public class Conditioner
     {
         // ------------ Fields--------------:
         // default values = 0 , boolean = false, reference = null
