@@ -15,26 +15,29 @@ using System.Text.Json;
 
 
 namespace Final_Projects
-{
+{   
     public delegate void InfoDel();
     internal class Program
     {
-        static void Save(VendingMachine vending)
-        {
-            string json = JsonSerializer.Serialize(vending);
-            File.WriteAllText("data.json", json);
-        }
-        static VendingMachine Load()
-        {
-            return JsonSerializer.Deserialize<VendingMachine>(File.ReadAllText("data.json"));
-        }
         static bool exit = false;
         static double fullContainerTea = 1000;
         static double fullContainerWater = 10000;
         static double fullContainerCoffee = 5000;
         static double fullContainerSugar = 1000;
         static double fullBankMoney = 10000;
+        static void Save(VendingMachine vending)
+        {
+            string json = JsonSerializer.Serialize(vending);
+            File.WriteAllText("data vending.json", json);
+        }
+        static string Load()
+        {
+            string jsonResult = File.ReadAllText("data vending.json");
+            VendingMachine? vendingResult = JsonSerializer.Deserialize<VendingMachine>(jsonResult);
 
+            return vendingResult?.ToString();
+
+        }
         static void Menu(VendingMachine vending)
         {
             Console.WriteLine("--------------------- Welcome to the Coffee Lab --------------------- \n");
@@ -57,18 +60,14 @@ namespace Final_Projects
                         Console.WriteLine("Good by!");
                         break;
                 }
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
         static void MenuUser(VendingMachine vending)
         {
-
-
             while (!exit)
             {
                 Console.WriteLine("-------------- User Mode -------------- \n");
@@ -94,11 +93,8 @@ namespace Final_Projects
                         }
                         catch (Exception ex )
                         {
-
                             Console.WriteLine(ex.Message);
                         }
-                        
-
                         break;
 
                     case 2:
@@ -206,7 +202,6 @@ namespace Final_Projects
                 }
             }
             while (count <= 3 && !exit);
-
         }
         static void ShowBvg(VendingMachine vending)
         {
@@ -223,24 +218,22 @@ namespace Final_Projects
             {
                 Category coffeeCategory = new Category { Name = "Coffee" };
                 Category teaCategory = new Category { Name = "Tea" };
-                vending = new VendingMachine(fullContainerWater, fullContainerCoffee,
-                                                        fullContainerTea, fullBankMoney,
-                                                        fullContainerSugar,
-                                                         new List<HotBeverage>
+
+                vending = new VendingMachine(fullContainerWater, fullContainerCoffee, fullContainerTea, fullBankMoney,
+                                             fullContainerSugar, new List<HotBeverage>
            {
-                            new Coffee(){ Name = "Americano", Price = 40.50, SugarLevel = 0,QuantityOfWater = 80,Category=coffeeCategory},
-                            new Coffee(){ Name = "Latte", Price = 40.50, SugarLevel = 10,QuantityOfWater = 100,Category=coffeeCategory},
-                            new Coffee(){ Name = "Espresso", Price = 40.50, SugarLevel = 0,QuantityOfWater = 30,Category=coffeeCategory},
-                            new Tea(){Name = "Green Tea", Price = 30.50, SugarLevel = 10 ,QuantityOfWater = 100,Category=teaCategory},
-                            new Tea(){Name = "Black Tea", Price = 30.50, SugarLevel = 10 ,QuantityOfWater = 100,Category=teaCategory},
-                            new Tea(){Name = "White Tea", Price = 30.50, SugarLevel = 10 ,QuantityOfWater = 100,Category=teaCategory},
-                            new Cappuccino(){Name = "Cappuccino", Price = 45.60, SugarLevel = 20,QuantityOfWater = 80 }
+                 new Coffee(){ Name = "Americano", Price = 40.50, SugarLevel = 10,QuantityOfWater = 80,Category=coffeeCategory,QuantityOfCoffee=30},
+                 new Coffee(){ Name = "Latte", Price = 40.50, SugarLevel = 10,QuantityOfWater = 100,Category=coffeeCategory,QuantityOfCoffee=20},
+                 new Coffee(){ Name = "Espresso", Price = 40.50, SugarLevel = 0,QuantityOfWater = 30,Category=coffeeCategory,QuantityOfCoffee=50},
+                 new Tea(){Name = "Green Tea", Price = 30.50, SugarLevel = 10 ,QuantityOfWater = 100,Category=teaCategory,QuantityOfTea=50},
+                 new Tea(){Name = "Black Tea", Price = 30.50, SugarLevel = 10 ,QuantityOfWater = 100,Category=teaCategory,QuantityOfTea=50},
+                 new Tea(){Name = "White Tea", Price = 30.50, SugarLevel = 10 ,QuantityOfWater = 100,Category=teaCategory, QuantityOfTea = 50},
+                 new Cappuccino(){Name = "Cappuccino", Price = 45.60, SugarLevel = 20,QuantityOfWater = 80 }
                             });
-
             }
-
             Menu(vending);
             Save(vending);
+          
 
         }
         class VendingMachine
@@ -258,18 +251,6 @@ namespace Final_Projects
             public double Sugar { get => sugar; set { sugar = value; } }
             public double Cash { get => cash; set { cash = value; } }
 
-
-            public void StatisticOfWater()
-            {
-                if (this.water < 100)
-                {
-                    Console.WriteLine("\n\n It is necessary to add water!!!!!!!!!!");
-
-                }
-                else
-                    Console.WriteLine($"\n\n Level by Water - {this.water} ml");
-            }
-
             public VendingMachine(double water, double coffee, double tea, double cash, double sugar, List<HotBeverage> hotBeverages)
             {
                 Water = water;
@@ -280,6 +261,15 @@ namespace Final_Projects
                 HotBeverages = hotBeverages;
                 InfoEvent += StatisticOfWater;
             }
+            public void StatisticOfWater()
+            {
+                if (this.water < 100) Console.WriteLine("\n\n It is necessary to add water!!!!!!!!!!");
+                else if(coffee<50) Console.WriteLine("\n\n It is necessary to add coffee!!!!!!!!!!");
+                else if(tea<50) Console.WriteLine("\n\n It is necessary to add tea!!!!!!!!!!");
+                else
+                    Console.WriteLine($"\n\n\nAvailability Ingredient:\n{ PrintIngredientAvailability()}"); 
+            }
+  
             // методи для поокремого завантаження автомату: водою, кавою, чаем, цукром
             public void AddWater(double water)
             {
@@ -302,7 +292,7 @@ namespace Final_Projects
                 if ((this.coffee + coffee) <= fullContainerCoffee)
                 {
                     this.coffee += coffee;
-                    Console.WriteLine($"Coffee was added. Now is {this.coffee} L ");
+                    Console.WriteLine($"Coffee was added. Now is {this.coffee} gram ");
                 }
                 else if ((this.coffee + coffee) > fullContainerCoffee)
                 {
@@ -380,19 +370,17 @@ namespace Final_Projects
                 {
                     if (amountPaid >= selectedBeverage.Price && this.water >= selectedBeverage.QuantityOfWater)
                     {
-
-                        if (selectedBeverage is Coffee)
+                        if (selectedBeverage is Coffee && coffee>=(selectedBeverage as Coffee).QuantityOfCoffee)
                         {
-                            Coffee coffeeBvg = selectedBeverage as Coffee;
-                            coffee -= coffeeBvg.QuantityOfCoffee;
-
-                        }else if (selectedBeverage is Tea)
+                             Coffee coffeeBvg = selectedBeverage as Coffee;
+                             this.coffee -= coffeeBvg.QuantityOfCoffee;                            
+                        }
+                        else if (selectedBeverage is Tea && tea>=(selectedBeverage as Tea).QuantityOfTea )
                         {
                             Tea taeBvg = selectedBeverage as Tea;
-                            tea -= taeBvg.QuantityOfTea;
+                            this.tea -= taeBvg.QuantityOfTea;
                         }
                         
-
                         cash += selectedBeverage.Price;
                             selectedBeverage.Prepare();
                             Console.WriteLine($"Prepared {selectedBeverage.Name}.\nThank You");
@@ -400,14 +388,12 @@ namespace Final_Projects
                             this.water -= selectedBeverage.QuantityOfWater;
                             this.sugar -= selectedBeverage.SugarLevel;
 
-                            InfoEvent?.Invoke();
-                        
+                            InfoEvent?.Invoke();                       
                     }
                     else if (amountPaid < selectedBeverage.Price)
                     {
                         Console.WriteLine("Insufficient payment. Please insert more money.");
-                    }
-                  
+                    }                 
                 }
                 else
                 {
@@ -415,65 +401,8 @@ namespace Final_Projects
                 }
                 Console.WriteLine();
             }
-
+            
         }
-       
-        abstract class HotBeverage
-        {
-            public double QuantityOfWater { get; set; }
-            public string? Name { get; set; }
-            public double Price { get; set; }
-            public double SugarLevel { get; set; }
-            public Category? Category { get; set; }
-            public abstract void Prepare();
-
-
-        }
-        class Coffee : HotBeverage
-        {
-            public double QuantityOfCoffee { get; set; }
-
-            public override void Prepare()
-            {
-                Console.WriteLine($" Coffee is preparing... ");
-
-            }
-            public override string ToString()
-            {
-                return $"{Name} - {Price} UAH (Sugar - {SugarLevel}) ";
-            }
-        }
-        class Tea : HotBeverage
-        {
-            public double QuantityOfTea { get; set; }
-            public override void Prepare()
-            {
-                Console.WriteLine($" Tea is preparing... ");
-
-            }
-            public override string ToString()
-            {
-                return $"{Name} - {Price} UAH (Sugar - {SugarLevel})";
-            }
-        }
-        class Cappuccino : HotBeverage
-        {
-            public double QuantityOfCappuccino { get; set; }
-
-            public override void Prepare()
-            {
-                Console.WriteLine($" Cappuccino is preparing... ");
-            }
-            public override string ToString()
-            {
-                return $"{Name} - {Price} UAH (Sugar - {SugarLevel}) ";
-            }
-        }
-        public class Category
-        {
-            public string? Name { get; set; }
-        }
-
     }
 }
 
